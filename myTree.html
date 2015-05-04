@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<title>Tree Demo</title>
+		<script type='text/javascript'>
+		function tree_demo(){
+			var canvas = document.getElementById('myCanvas');
+			var ctx = canvas.getContext('2d');
+			
+      		ctx.fillStyle = '#FF9900';
+      		ctx.fillRect(0,0,1024,768);
+
+			drawTree(ctx, 200, 750, 60, -Math.PI/2, 8, 10);
+			//ctx, startX,  startY, length, angle, depth, branchWidth
+
+		}
+
+
+		function drawTree(ctx, startX,  startY, length, angle, depth, branchWidth){
+
+			var newLength, newAngle, newDepth;
+        	var endX, endY;
+      		var subBraches;
+
+      		ctx.beginPath();
+      		ctx.moveTo(startX, startY);
+      		endX = startX + length * Math.cos(angle);
+     		endY = startY + length * Math.sin(angle);
+			ctx.lineCap ='round';
+     		ctx.lineWidth = branchWidth;
+     		ctx.lineTo(endX, endY);
+     		ctx.stroke();
+		
+			newDepth = depth - 1;
+			if(newDepth){
+				branchWidth *= 0.7; //樹支變細
+				subBraches = 3; //分支數目
+				
+				for (var i=0; i<subBraches; i++){
+       			newAngle = angle + (Math.random() - 0.5) * Math.PI/2;
+       			newLength = length * (0.7 + Math.random() * 0.3);
+       			drawTree(ctx, endX, endY, newLength, newAngle, newDepth, branchWidth);
+				}
+			}
+		}
+	
+ 
+		</script>
+	</head>
+	<body onload='tree_demo();'>
+		<canvas id='myCanvas' width='1024' height='768' style="border:1px solid #000000"></canvas>
+	</body>
+</html>
